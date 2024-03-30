@@ -11,9 +11,7 @@
 - Varios archivos:
 - Es conjunto de muchos temas , que van tanto de imagenes ISo varias muy recomendadas con instalación , Metdologias varias , OWASP COMPLETO TOP 10 TODOS LOS AÑOS , Reconocimiento Pasivo activo , Explotacion muchas  Cargas útiles , Google Hacking   Shodan  Censys , Bypass de Proxy inverso , Waf , XSS , SQL y NOSQL , SSRF , CSRF , DOBLE AUTENTICACION , JSON ,Ajax, LFI-RFI , ROBOTS.TXT , Redirrecionamiento , 403-302 , APIS , AUTENTICACION , Control de acceso roto,   INJECTIONS , PATH TRANVERSAL , C2 descentralizado mediante LogDrop  , XXE , NOSQL , SSTI , LOGICA EMPRESARIAL , DIVULGACION DE INFORMACION , CORS CLICKJACKING , ADQUISICION DE CUENTAS, BYPASS DE CONTRASEÑAS Y CONTROLES ,OMISION DE PAGOS, RCE , Race Conditions 
  , DOM , WEBSOCKETS , Web LLM attacks , Inyección CRLF , INYECCION DE PLATILLA DEL SALDO SERVER , ENVENENAMIENTO CACHE , ENCABESADOS HTTP , JWT , CONTAMINACION PROTOTIPO , AUTENTICACION OAUTH , WordPress ,  INYECCION HTML Y CSS  , AWS , PRIVELEGIO HORIZONTAL Y VERTICAL EXPOSICION DE TOKENS ALATEORIDAD DEBIL , ENUMERACION USARIOS , puertos expuestos .<br>+
-[Apache2](OSSTMM_v3_traducido_al_Español.pdf)<br>
-+[Nginx](Resumen_personal_de_OSSTMM_V3_ES.txt)<br>
-+[Pentesting](Resumen_personal_de_OSSTMM_V3_ES.txt)<br>
++[Open redirect](.a)<br>
 +[Open redirect](.a)<br>
 
 
