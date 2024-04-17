@@ -1,0 +1,214 @@
+Proxies
+
+Hoy en día, las aplicaciones web  suelen utilizar algún tipo de proxies intermediarios , que pueden (a)utilizarse para explotar vulnerabilidades. Estas vulnerabilidades necesitan que exista un proxy vulnerable, pero generalmente también necesitan alguna vulnerabilidad adicional en el backend. 
+
+
+Abusar de los encabezados salto a salto
+
+
+Envenenamiento de caché/engaño de caché
+
+
+Contrabando de solicitudes HTTP
+
+
+Contrabando de H2C
+
+
+Inclusión del lado del servidor/Inclusión del lado del borde
+
+
+Descubriendo Cloudflare
+
+
+Inyección del lado del servidor XSLT
+
+
+Omisión de protecciones Proxy / WAF
+
+--------------------------------------------------------
+
+User input
+
+Entrada del usuario
+La mayoría de las aplicaciones web permitirán a los usuarios ingresar algunos datos que se procesarán más adelante. 
+Dependiendo de la estructura de los datos, el servidor espera que algunas vulnerabilidades se apliquen o no.
+
+Valores reflejados
+Si los datos introducidos pueden reflejarse de alguna manera en la respuesta, la página podría ser vulnerable a varios problemas.
+
+
+Inyección de plantilla del lado del cliente
+
+
+Inyección de comando
+
+
+CRLF
+
+
+Marcado colgante
+
+
+Inclusión de archivos/recorrido de ruta
+
+
+Abrir redireccionamiento
+
+
+Prototipo de contaminación para XSS
+
+
+Inclusión del lado del servidor/Inclusión del lado del borde
+
+
+Falsificación de solicitudes del lado del servidor
+
+
+Inyección de plantilla del lado del servidor
+
+
+Atrapar pestañas inversas
+
+
+Inyección del lado del servidor XSLT
+
+
+XSS
+
+
+XSSI
+
+
+Búsqueda XS
+
+-----------------------------------------------------------
+
+
+Funcionalidades de búsqueda
+Si la funcionalidad puede usarse para buscar algún tipo de datos dentro del backend, tal vez puedas (ab)usarla para buscar datos arbitrarios.
+
+
+Inclusión de archivos/recorrido de ruta
+
+
+Inyección NoSQL
+
+
+Inyección LDAP
+
+
+Rehacer
+
+
+Inyección SQL
+
+
+Inyección XPATH
+---------------------------------------------------------
+Formularios, WebSockets y PostMsgs
+Cuando un websocket publica un mensaje o un formulario que permite a los usuarios realizar acciones, pueden surgir vulnerabilidades.
+
+
+Falsificación de solicitudes entre sitios
+
+
+Secuestro de WebSocket entre sitios (CSWSH)
+
+
+Vulnerabilidades posteriores al mensaje
+--------------------------------------------------------------
+Encabezados HTTP
+Dependiendo de los encabezados HTTP proporcionados por el servidor web, pueden existir algunas vulnerabilidades.
+
+
+secuestro de clics
+
+
+Omisión de la política de seguridad de contenido
+
+
+Hackeo de cookies
+
+
+CORS: configuraciones erróneas y omisión
+ ---------------------------------------------------------
+Bypasses
+Hay varias funcionalidades específicas en las que algunas soluciones podrían resultar útiles para evitarlas.
+
+
+Omisión 2FA/OTP
+
+
+Omitir el proceso de pago
+
+
+Omisión de captchas
+
+
+Omitir inicio de sesión
+
+
+Condición de carrera
+
+
+Omisión del límite de velocidad
+
+
+Restablecer omisión de contraseña olvidada
+ -------------------------------------------------------
+
+Vulnerabilidades de registro
+
+Objetos estructurados / Funcionalidades específicas
+Algunas funcionalidades requerirán que los datos estén estructurados en un formato muy específico (como un objeto serializado en lenguaje o XML). Por lo tanto, es más fácil identificar si la aplicación podría ser vulnerable, ya que necesita procesar ese tipo de datos. Algunas funcionalidades específicas también pueden ser vulnerables si se utiliza un formato específico de entrada (como inyecciones de encabezado de correo electrónico).
+
+
+Deserialización
+
+
+Inyección de encabezado de correo electrónico
+
+
+Vulnerabilidades de JWT
+
+
+Entidad externa XML
+-------------------------------------------------------------
+Archivos
+Las funcionalidades que permiten cargar archivos pueden ser vulnerables a varios problemas. Las funcionalidades que generan archivos, incluida la entrada del usuario, pueden ejecutar código inesperado. Los usuarios que abran archivos cargados por usuarios o generados automáticamente, incluidas las entradas del usuario, podrían verse comprometidos.
+
+
+Subir archivo
+
+
+Inyección de fórmula
+
+
+Inyección de PDF
+
+
+XSS del lado del servidor
+
+Gestión de identidad externa
+
+OAUTH para la adquisición de cuentas
+
+
+Ataques SAML
+----------------------------------------------------------
+Otras vulnerabilidades útiles
+Estas vulnerabilidades podrían ayudar a explotar otras vulnerabilidades.
+
+
+Adquisición de dominio/subdominio
+
+
+IDOR
+
+
+Contaminación de parámetros
+
+
+Vulnerabilidad de normalización Unicode
+-------------------------------------------------------------
