@@ -1,0 +1,73 @@
+
+
+·········· GUÍA VERIFICACIÓN VULN ··········
+
+#### CLIENTE ###·········································
+
+1- OPEN REDIRECT '
+2- (XSS) CROSS-SITE
+3- (CSRF)REQUEST FORGERY
+4- (CORS)ORIGEN CRUZADO
+5- CLICKHACKING
+6- (DOOM)
+7- WEBSOCKETS
+8- INJECTIONS CLIENT SIDE TEMPLATE
+9- CRLF
+
+### SERVIDOR ###······································
+
+21- AUTENTICACIÓN 
+22- PATH TRAVERSAL
+23- COMANDO INJECTION
+24- LÓGICA EMPRESARIAL
+25- INFORMACIÓN DISCLOSURE
+26- CONTROL DE ACCESO
+27- CARGA DE ARCHIVO
+28- CARERA DE CONDICIÓN
+29- (SSRF) SERVER-SIDE REQUEST FORGERY
+30- XXE INJECTION XML
+31- INJECTION NOSQL
+32- API TESTEO
+32- JSON 
+33- AJAX
+34- (RFI)
+
+### OTRAS VULN  ################
+
+1- Bypass 
+2- Redirrecionamiento , 403-302 
+3- SSTI 
+4- OMISION DE PAGOS, 
+5- ENVENENAMIENTO CACHE 
+6- ENCABESADOS HTTP
+7- parameter tampering
+8- subdomain takeover
+9- Buffer overflow - web
+10- Long password dos attack
+11- Vulnerabilidad sin limitación de velocidad: flujo lógico
+12- Envenenamiento para restablecer contraseña
+14- Control de acceso roto (falta control de acceso a nivel de función, IDOR, escalada de privilegios, omisión de autorización, fallas en la lógica de negocios, navegación forzada, manipulación de parámetros, recorrido de ruta, inclusión de archivos locales)
+
+15- Adopción de cuenta a través de la página de olvidar contraseña
+16- Control de acceso roto
+17- Bypass de limitación de velocidad
+18- Falta de confirmación de contraseña
+19- Inyección CRLF
+20- CONTAMINAICON PROTOTIPO
+21- OMISION DE FILTROS EN CORREO
+22- Contrabando de solicitudes HTTP
+23- Insecure deserialization
+
+
+
+
+### RECONCOCIMIENTO MANUAL ###_______________________________
+
+1- GOOGLE HACKING 
+2- SHODAN
+3- GIT HUB
+4- ASN-RANGO IP- DOMINIOS -
+5- APLICACION  PRE PRODUCCION
+6- RANGOS I SERVICIOS OCULTO - ESCANEO HISTORICO7
+7- REDES NO PROTEGIDAS 
+8- ver los METODOS HTTP PERMITDOS DE CADA WEB
