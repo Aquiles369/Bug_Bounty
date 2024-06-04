@@ -13,6 +13,7 @@
 +[Open_Redirect](Open_Redirect)<br>
 +[worlist_comando_inyections](worlist_comando_inyections)<br>
 +[evasion_waf](evasion_waf)<br>
++[tool creada por mi FLDSMDFR echale un ojo contiene mas de 100 herramientas todo en una ,Recon , Enumeracion Pasiva Activa , Explotacion de vunl web y muchos mas:](https://github.com/Aquiles369/FLDSMDFR)<br>
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif"> 
